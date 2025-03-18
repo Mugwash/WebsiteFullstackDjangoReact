@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  backend:
+    build: ./PortfolioBackendDjango
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./PortfolioBackendDjango:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - frontend
+
+  frontend:
+    build: ./PortfolioFrontendReact
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./PortfolioFrontendReact:/app/node_modules
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+  cron:
+    build:
+      context: .
+      dockerfile: /scheduler/Dockerfile.cron
+    depends_on:
+      - backend
+    restart: always

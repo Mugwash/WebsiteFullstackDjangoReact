@@ -1,0 +1,6 @@
+urllib3<2
+django
+djangorestframework
+requests
+python-decouple
+django-cors-headers

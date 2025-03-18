@@ -1,0 +1,10 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+COPY . /app
+
+# Install necessary packages (curl to call your endpoint)
+RUN apt-get update && apt-get install -y curl && apt-get clean
+
+# Command to run the task every hour
+CMD ["sh", "-c", "while true; do curl http://backend:8000/git/update-repo-data/; sleep 30; done"]

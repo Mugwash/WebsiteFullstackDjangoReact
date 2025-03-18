@@ -1,0 +1,6 @@
+/* App.css */
+html, body {
+  background-color: #f0f0f0; /* Manually set the theme background color */
+  margin: 0; /* Ensure no default margins interfere */
+  height: 100%; /* Ensure the background covers full height */
+}
