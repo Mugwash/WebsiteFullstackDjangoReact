@@ -89,54 +89,53 @@ const RepositoryCard = ({ repo }: { repo: Repo }) => {
   return (
     <Card 
       sx={{ 
-      display: 'flex', 
-      flexDirection: 'column', 
-      width: '100%', 
-      height: '100%', // Makes all cards equal height 
-      // Balances content inside
+        display: 'flex', 
+        flexDirection: 'column', 
+        width: '100%', 
+        height: '100%', 
         borderRadius: '16px',
         p: { xs: 2, sm: 3 } 
-        }}
-          >
-        <Box sx={{ position: 'relative' }}>
-          <CardMedia
-            component="img"
-            alt="coverphoto"
-            image={repo.image}
-            sx={{
-          borderBottom: '1px solid',
-          borderColor: 'divider',
-          maxHeight: { xs: 150, sm: 200 }, 
-          borderRadius: '16px',
-          objectFit: 'cover'
-            }}
-          />
-          <Typography
-            variant="body2"
-            color="primary"
-            sx={{ 
-          position: 'absolute', 
-          bottom: 8, 
-          right: 8, 
-          backgroundColor: 'rgba(0, 0, 0, 0.5)', 
-          color: 'white', 
-          padding: '2px 8px', 
-          borderRadius: '4px'
-            }}
-          >
-            Last updated: {repo.last_updated}
-          </Typography>
-        </Box>
-        <CardContent>
-          <Typography
-            color="primary"
-            variant="h5"
-            component="div"
-            gutterBottom
-          >
-            {repo.name}
-          </Typography>
-        
+      }}
+    >
+      <Box sx={{ position: 'relative' }}>
+        <CardMedia
+          component="img"
+          alt="coverphoto"
+          image={repo.image}
+          sx={{
+            borderBottom: '1px solid',
+            borderColor: 'divider',
+            maxHeight: { xs: 150, sm: 200 }, 
+            borderRadius: '16px',
+            objectFit: 'cover'
+          }}
+        />
+        <Typography
+          variant="body2"
+          color="primary"
+          sx={{ 
+            position: 'absolute', 
+            bottom: 8, 
+            right: 8, 
+            backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+            color: 'white', 
+            padding: '2px 8px', 
+            borderRadius: '4px'
+          }}
+        >
+          Last updated: {repo.last_updated}
+        </Typography>
+      </Box>
+      <CardContent>
+        <Typography
+          color="primary"
+          variant="h5"
+          component="div"
+          gutterBottom
+        >
+          {repo.name}
+        </Typography>
+      
         <List>
           {repo.commits.map((commit, index) => (
             <React.Fragment key={commit.sha}>
@@ -147,7 +146,21 @@ const RepositoryCard = ({ repo }: { repo: Repo }) => {
                 width: '100%' 
               }}>
                 <ListItemText
-                  primary={commit.message}
+                  primary={
+                    <Box sx={{ maxWidth: 300 }}> {/* Adjust width as needed */}
+                      <Typography
+                      variant="body1"
+                      sx={{
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      maxWidth: "100%",
+                    }}
+                    >
+                      {commit.message}
+                      </Typography>
+                      </Box>
+                  }
                   secondary={
                     <>
                       <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
@@ -165,7 +178,7 @@ const RepositoryCard = ({ repo }: { repo: Repo }) => {
                         </Tooltip>
                       </Typography>
                       <Collapse in={expandedSection === index} timeout="auto" unmountOnExit>
-                        <TextBox>
+                        <TextBox sx={{ padding: 2 }}>
                           <CodeDisplay patchData={commit.patch || ''} />
                         </TextBox>
                         {commit.ai_summary && (
@@ -206,7 +219,6 @@ const RepositoryCard = ({ repo }: { repo: Repo }) => {
           ))}
         </List>
       </CardContent>
-      {/* View Repo Button */}
       <CardContent sx={{ textAlign: 'center' }}>
         <Button variant="contained" color="primary" href={`https://github.com/${user}/${repo.name}`} target="_blank">
           View Repository

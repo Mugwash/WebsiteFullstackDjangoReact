@@ -88,7 +88,7 @@ const Homepage: React.FC = () => {
 
         {/* Repo Cards */}
         <Grid container spacing={2} justifyContent="center">
-          {repoData.map((repo, index) => (
+          {repoData.slice().reverse().map((repo, index) => (
             <Grid 
               item 
               xs={12} 
@@ -99,7 +99,7 @@ const Homepage: React.FC = () => {
               sx={{ alignSelf: 'stretch' }} // Ensures uniform height
             >
               <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%' }}>
-                <RepoCard repo={repo} />
+          <RepoCard repo={repo} />
               </Box>
             </Grid>
           ))}
